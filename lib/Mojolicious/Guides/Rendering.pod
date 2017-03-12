@@ -664,7 +664,7 @@ action could do.
   % debug 'Hello from a template!';
 
 Helpers can also accept template blocks as last argument, this for example,
-allows very pleasant to use tag helpers and filters. Wrapping the helper result
+makes it quite pleasant to use tag helpers and filters. Wrapping the helper result
 into a L<Mojo::ByteStream> object can prevent accidental double escaping.
 
   use Mojolicious::Lite;
