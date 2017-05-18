@@ -16,6 +16,8 @@ has paths   => sub { [] };
 my $PUBLIC = Mojo::Home->new(Mojo::Home->new->mojo_lib_dir)
   ->child('Mojolicious', 'resources', 'public');
 
+has serve_bundled => sub { 1 };
+
 sub dispatch {
   my ($self, $c) = @_;
 
@@ -47,6 +49,8 @@ sub file {
 
   # Search DATA
   if (my $asset = $self->_get_data_file($rel)) { return $asset }
+
+  return unless $self->serve_bundled;
 
   # Search bundled files
   return $self->_get_file(path($PUBLIC, split('/', $rel))->to_string);
@@ -200,6 +204,10 @@ Directories to serve static files from, first one has the highest precedence.
 
   # Add another "public" directory with higher precedence
   unshift @{$static->paths}, '/home/sri/themes/blue/public';
+
+=head2 serve_bundled
+
+L<Mojolicious> ships with a number of bundled static assets, they're used by the pretty exception pages in development. Setting C<serve_bundled> to a false value will mean these image / style / js files simply C<404>.
 
 =head1 METHODS
 
